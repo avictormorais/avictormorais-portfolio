@@ -9,7 +9,7 @@ const StyledNavigator = styled.nav`
   justify-content: center;
   align-content: center;
   position: fixed;
-  right: calc(var(--padding-inline-layout) / 2);
+  left: calc(var(--padding-inline-layout) / 2);
   background-color: var(--secondary-color);
   padding-inline: 10px;
   border-radius: 50px;
@@ -65,7 +65,7 @@ const StyledItem = styled.div`
 const Tooltip = styled.span`
   position: absolute;
   text-align: right;
-  right: 65px;
+  left: 65px;
   top: 50%;
   transform: translateY(-50%);
   background-color: var(--secondary-color);

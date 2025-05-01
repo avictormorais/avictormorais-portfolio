@@ -34,5 +34,45 @@
                 "color": "#019889"
             }
         ]
+    },
+    {
+        "icon": "../../ProjectsImages/portfolio/logo.png",
+        "name": "Freelancer",
+        "type": "(Freelancer)",
+        "typePt": "(Freelancer)",
+        "description": "I actively participate in freelance projects, where I develop customized solutions to meet clients' specific needs. This experience has allowed me to improve my technical and communication skills, as well as gain a broader perspective on the market and current trends.",
+        "descriptionPt": "Participo efetivamente de projetos como freelancer, onde desenvolvo soluções personalizadas para atender às necessidades específicas dos clientes. Essa experiência me permitiu aprimorar minhas habilidades técnicas e de comunicação, além de me proporcionar uma visão mais ampla do mercado e como estão as tendências atuais.",
+        "period": "2024 - Present",
+        "periodPt": "2024 - Presente",
+        "technologies": [
+            {
+                "icon": "mdi:language-javascript",
+                "color": "#f1db56"
+            },
+            {
+                "icon": "mdi:react",
+                "color": "#0989c8"
+            },
+            {
+                "icon": "file-icons:styledcomponents",
+                "color": "#bf4f74"
+            },
+            {
+                "icon": "bi:github",
+                "color": "var(--primary-text-color)"
+            },
+            {
+                "icon": "simple-icons:i18next",
+                "color": "#019889"
+            },
+            {
+                "icon": "simple-icons:axios",
+                "color": "#5a29e3"
+            },
+            {
+                "icon": "simple-icons:vercel",
+                "color": "var(--primary-text-color)"
+            }
+        ]
     }
 ]

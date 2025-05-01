@@ -38,6 +38,10 @@
         "color": "#0989c8"
       },
       {
+        "icon": "simple-icons:python",
+        "color": "#417bac"
+      },
+      {
         "icon": "file-icons:flask",
         "color": "var(--primary-text-color)"
       },
@@ -100,5 +104,23 @@
       }
     ],
     "github": "https://github.com/avictormorais/portfolio"
+  },
+  {
+    "icon": "../../ProjectsImages/simpleBlockchain/logo.png",
+    "preview": "../../ProjectsImages/simpleBlockchain/preview.png",
+    "name": "Simple blockchain",
+    "description": "A simple, didactic JavaScript blockchain that runs in the console and demonstrates the basic principles of decentralization and immutability.",
+    "descriptionPt": "Uma blockchain simples e didática em JavaScript, que roda no console e demonstra os princípios básicos de descentralização e imutabilidade.",
+    "technologies": [
+      {
+        "icon": "mdi:language-javascript",
+        "color": "#f7df1e"
+      },
+      {
+        "icon": "bi:github",
+        "color": "var(--primary-text-color)"
+      }
+    ],
+    "github": "https://github.com/avictormorais/simpleBlockchain"
   }
 ]
