@@ -1,0 +1,35 @@
+:root {
+  --backgroundColor: #0a0a0a;
+  --textColor: #dce0df;
+  --alwaysWhite: #dce0df;
+}
+
+[data-theme="dark"] {
+  --backgroundColor: #dce0df;
+  --textColor: #121212;
+}
+
+* {
+  font-family: 'Fraunces', Avenir, Helvetica, Arial, sans-serif;
+  color: var(--textColor);
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 0.5s, background-color 0.5s;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--backgroundColor);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-user-select: none;
+  user-select: none;
+}
