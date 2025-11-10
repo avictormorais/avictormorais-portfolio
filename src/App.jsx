@@ -1,20 +1,43 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppContext } from './contexts/AppContext.jsx'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Icon } from '@iconify/react'
 import AVM from './components/icons/AVM.jsx'
 import Loading from './components/commom/Loading.jsx'
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
+const fadeInMenu = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0.85;
+    transform: translateY(0);
+  }
+`
 
 function App() {
   const { t } = useTranslation()
   const { theme, language, toggleTheme, changeLanguage } = useAppContext()
   const [loading, setLoading] = useState(true)
+  const [selectedMenuItem, setSelectedMenuItem] = useState('')
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
-    }, 2000)
+    }, 1500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -24,7 +47,7 @@ function App() {
       <Loading active={loading} />
       <MenuContainer>
         <MenuItens>
-          <Controls>
+          <Controls delay={2}>
             <IconButton onClick={toggleTheme} key={theme}>
               <Icon 
                 icon={theme === 'light' ? 'line-md:moon-filled-to-sunny-filled-loop-transition' : 'line-md:sunny-filled-loop-to-moon-filled-loop-transition'} 
@@ -38,14 +61,26 @@ function App() {
             </LanguageSelector>
           </Controls>
           <MenuItems>
-            <MenuItem>{t('about')}</MenuItem>
-            <MenuItem>{t('experiences')}</MenuItem>
-            <MenuItem>{t('projects')}</MenuItem>
-            <MenuItem>{t('contact')}</MenuItem>
+            <Row>
+              <MenuItem selected={selectedMenuItem === 'about'} delay={2.2} onClick={() => setSelectedMenuItem('about')}>{t('about')}</MenuItem>
+              <Circle active={selectedMenuItem === 'about'} />
+            </Row>
+            <Row>
+              <MenuItem selected={selectedMenuItem === 'experiences'} delay={2.4} onClick={() => setSelectedMenuItem('experiences')}>{t('experiences')}</MenuItem>
+              <Circle active={selectedMenuItem === 'experiences'} />
+            </Row>
+            <Row>
+              <MenuItem selected={selectedMenuItem === 'projects'} delay={2.6} onClick={() => setSelectedMenuItem('projects')}>{t('projects')}</MenuItem>
+              <Circle active={selectedMenuItem === 'projects'} />
+            </Row>
+            <Row>
+              <MenuItem selected={selectedMenuItem === 'contact'} delay={2.8} onClick={() => setSelectedMenuItem('contact')}>{t('contact')}</MenuItem>
+              <Circle active={selectedMenuItem === 'contact'} />
+            </Row>
           </MenuItems>
         </MenuItens>
       </MenuContainer>
-      <ContentContainer>
+      <ContentContainer delay={3}>
         <IconContainer>
           <AVM width={'60%'} color="var(--textColor)" />
         </IconContainer>
@@ -61,6 +96,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  overflow: hidden;
 `;
 
 const MenuContainer = styled.div`
@@ -85,6 +121,7 @@ const Controls = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
+  animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;
 `;
 
 const MenuItems = styled.div`
@@ -140,15 +177,15 @@ const MenuItem = styled.h2`
   color: var(--textColor);
   font-size: 1.5rem;
   font-weight: bolder;
-  opacity: 0.85;
   margin: 0;
   padding: 0;
   margin-top: 5px;
   transition: all 0.3s ease-in-out;
+  animation: ${fadeInMenu} 0.5s ease-out ${props => props.delay || 0}s both;
 
   &:hover {
-    opacity: 1;
-    transform: scale(1.005);
+    transition: all 0.3s ease-in-out;
+    opacity: 1 !important;
   }
 `;
 
@@ -159,6 +196,7 @@ const ContentContainer = styled.div`
   height: 100%;
   align-items: end;
   justify-content: end;
+  animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;
 `;
 
 const IconContainer = styled.div`
@@ -168,6 +206,24 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: end;
   align-items: end;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+`;
+
+const Circle = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--textColor);
+  margin-bottom: -10px;
+  margin-left: 5px;
+  opacity: ${props => props.active ? 0.5 : 0};
+  transition: all 0.3s ease-in-out;
 `;
 
 export default App
