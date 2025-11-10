@@ -1,4 +1,8 @@
 {
   "light": "Light",
-  "dark": "Dark"
+  "dark": "Dark",
+  "about": "About",
+  "experiences": "Experiences",
+  "projects": "Projects",
+  "contact": "Contact"
 }
