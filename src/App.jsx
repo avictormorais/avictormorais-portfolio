@@ -33,6 +33,7 @@ function App() {
   const { theme, language, toggleTheme, changeLanguage } = useAppContext()
   const [loading, setLoading] = useState(true)
   const [selectedMenuItem, setSelectedMenuItem] = useState('')
+  const [fadingOut, setFadingOut] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -41,6 +42,12 @@ function App() {
 
     return () => clearTimeout(timer)
   }, [])
+
+  useEffect(() => {
+    if (selectedMenuItem) {
+      setFadingOut(true)
+    }
+  }, [selectedMenuItem])
 
   return (
     <Container>
@@ -80,8 +87,8 @@ function App() {
           </MenuItems>
         </MenuItens>
       </MenuContainer>
-      <ContentContainer delay={3}>
-        <IconContainer>
+      <ContentContainer delay={3} fadingOut={fadingOut}>
+        <IconContainer fadingOut={fadingOut}>
           <AVM width={'60%'} color="var(--textColor)" />
         </IconContainer>
       </ContentContainer>
@@ -206,6 +213,8 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: end;
   align-items: end;
+  opacity: ${props => props.fadingOut ? 0 : 1};
+  transition: opacity 0.5s ease-out;
 `;
 
 const Row = styled.div`
