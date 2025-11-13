@@ -36,6 +36,7 @@ function App() {
   const [selectedMenuItem, setSelectedMenuItem] = useState('')
   const [fadingOut, setFadingOut] = useState(false)
   const [iconVisible, setIconVisible] = useState(true)
+  const [aboutMounted, setAboutMounted] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -54,6 +55,17 @@ function App() {
       return () => clearTimeout(timer)
     }
   }, [selectedMenuItem])
+
+  useEffect(() => {
+    if (selectedMenuItem === 'about') {
+      setAboutMounted(true)
+    } else if (aboutMounted) {
+      const timer = setTimeout(() => {
+        setAboutMounted(false)
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [selectedMenuItem, aboutMounted])
 
   const handleChangeMenuItem = (item) => {
     const timer = setTimeout(() => {
@@ -106,7 +118,7 @@ function App() {
             <AVM width={'60%'} color="var(--textColor)" />
           </IconContainer>
         )}
-        {!iconVisible && selectedMenuItem === 'about' && <About />}
+        {!iconVisible && aboutMounted && <About visible={selectedMenuItem === 'about'} />}
       </ContentContainer>
     </Container>
   )

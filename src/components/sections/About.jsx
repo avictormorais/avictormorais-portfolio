@@ -25,7 +25,7 @@ const fadeInOp = keyframes`
   }
 `;
 
-export default function About() {
+export default function About({ visible }) {
     const { t } = useTranslation();
     const languages = [
         { name: "JavaScript", icon: "simple-icons:javascript" },
@@ -59,7 +59,7 @@ export default function About() {
     ];
 
     return (
-        <Container>
+        <Container visible={visible}>
             <ContainerIcon delay={0.2}>
                 <AVM width={'150px'} color="var(--textColor)" />
             </ContainerIcon>
@@ -109,7 +109,8 @@ export default function About() {
 
             <CVSection delay={2.2}>
                 <Title>{t('cv_title')}</Title>
-                <CVButton href="/curriculum.pdf" download aria-label={t('download_cv')}>
+                <Paragraph>{t('cv_description')}</Paragraph>
+                <CVButton href="/curriculum.pdf" aria-label={t('download_cv')}>
                     {t('download_cv')}
                 </CVButton>
             </CVSection>
@@ -129,6 +130,8 @@ const Container = styled.div`
     max-width: 1000px;
     overflow-y: auto;
     overflow-x: hidden;
+    opacity: ${props => props.visible ? 1 : 0};
+    transition: opacity 0.5s ease-out;
 `;
 
 const Row = styled.div`
@@ -199,6 +202,8 @@ const TechItem = styled.div`
     padding: 0.75rem 0.5rem;
     border-radius: 6px;
     transition: transform 0.2s ease;
+    padding-inline: 0;
+    margin-left: -15px;
     
     &:hover {
         transform: translateY(-3px);
@@ -206,9 +211,10 @@ const TechItem = styled.div`
 `;
 
 const TechName = styled.span`
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     color: var(--textColor);
-    font-weight: 600;
+    font-weight: 800;
+    margin-top: 5px;
     text-align: center;
     opacity: 0.85;
     line-height: 1.2;

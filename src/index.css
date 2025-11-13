@@ -12,7 +12,7 @@
 }
 
 * {
-  font-family: 'Fraunces', Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Molengo', 'Fraunces', Avenir, Helvetica, Arial, sans-serif;
   color: var(--textColor);
   line-height: 1.5;
   font-weight: 400;
@@ -50,6 +50,16 @@ body {
   background-color: var(--backgroundColor);
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+::selection {
+  background: var(--textColor);
+  color: var(--backgroundColor);
+}
+
+::-moz-selection {
+  background: var(--textColor);
+  color: var(--backgroundColor);
 }
 
 @supports not selector(::-webkit-scrollbar) {
