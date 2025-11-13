@@ -4,5 +4,15 @@
   "about": "About",
   "experiences": "Experiences",
   "projects": "Projects",
-  "contact": "Contact"
+  "contact": "Contact",
+  "about_name": "Victor Morais",
+  "about_intro_1": "Full Stack Developer with over 1 year of hands-on experience in real projects as a freelancer and intern. Computer Science student (UEPB).",
+  "about_intro_2": "Specialized in web and mobile applications, focused on clean code, performance and user experience. Comfortable with agile methodologies and collaborative teams.",
+  "technologies_title": "Technologies & Tools",
+  "technologies_desc": "Key programming languages, frameworks and tools with practical experience and presence in projects and public repositories.",
+  "languages": "Languages",
+  "frameworks": "Frameworks & Libraries",
+  "tools": "Tools & Databases",
+  "cv_title": "Curriculum",
+  "download_cv": "Download CV"
 }

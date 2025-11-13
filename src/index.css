@@ -1,12 +1,14 @@
 :root {
   --backgroundColor: #0a0a0a;
   --textColor: #dce0df;
+  --textColor-rgb: 220, 224, 223;
   --alwaysWhite: #dce0df;
 }
 
 [data-theme="dark"] {
   --backgroundColor: #dce0df;
   --textColor: #121212;
+  --textColor-rgb: 18, 18, 18;
 }
 
 * {
@@ -20,6 +22,23 @@
   -moz-osx-font-smoothing: grayscale;
   transition: color 0.5s, background-color 0.5s;
   letter-spacing: 2px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+    margin: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--textColor);
+    opacity: 0.4;
+    border-radius: 3px;
+  }
 }
 
 body {
@@ -31,6 +50,11 @@ body {
   background-color: var(--backgroundColor);
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-user-select: none;
-  user-select: none;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: rgba(var(--textColor-rgb), 0.4) transparent;
+    scrollbar-width: thin;
+  }
 }

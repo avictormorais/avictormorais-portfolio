@@ -5,6 +5,7 @@ import styled, { keyframes } from 'styled-components'
 import { Icon } from '@iconify/react'
 import AVM from './components/icons/AVM.jsx'
 import Loading from './components/commom/Loading.jsx'
+import About from './components/sections/About.jsx'
 
 const fadeIn = keyframes`
   from {
@@ -34,6 +35,7 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [selectedMenuItem, setSelectedMenuItem] = useState('')
   const [fadingOut, setFadingOut] = useState(false)
+  const [iconVisible, setIconVisible] = useState(true)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,8 +48,19 @@ function App() {
   useEffect(() => {
     if (selectedMenuItem) {
       setFadingOut(true)
+      const timer = setTimeout(() => {
+        setIconVisible(false)
+      }, 500)
+      return () => clearTimeout(timer)
     }
   }, [selectedMenuItem])
+
+  const handleChangeMenuItem = (item) => {
+    const timer = setTimeout(() => {
+      setSelectedMenuItem(item)
+    }, 500)
+    return () => clearTimeout(timer)
+  }
 
   return (
     <Container>
@@ -69,28 +82,31 @@ function App() {
           </Controls>
           <MenuItems>
             <Row>
-              <MenuItem selected={selectedMenuItem === 'about'} delay={2.2} onClick={() => setSelectedMenuItem('about')}>{t('about')}</MenuItem>
+              <MenuItem selected={selectedMenuItem === 'about'} delay={2.2} onClick={() => handleChangeMenuItem('about')}>{t('about')}</MenuItem>
               <Circle active={selectedMenuItem === 'about'} />
             </Row>
             <Row>
-              <MenuItem selected={selectedMenuItem === 'experiences'} delay={2.4} onClick={() => setSelectedMenuItem('experiences')}>{t('experiences')}</MenuItem>
+              <MenuItem selected={selectedMenuItem === 'experiences'} delay={2.4} onClick={() => handleChangeMenuItem('experiences')}>{t('experiences')}</MenuItem>
               <Circle active={selectedMenuItem === 'experiences'} />
             </Row>
             <Row>
-              <MenuItem selected={selectedMenuItem === 'projects'} delay={2.6} onClick={() => setSelectedMenuItem('projects')}>{t('projects')}</MenuItem>
+              <MenuItem selected={selectedMenuItem === 'projects'} delay={2.6} onClick={() => handleChangeMenuItem('projects')}>{t('projects')}</MenuItem>
               <Circle active={selectedMenuItem === 'projects'} />
             </Row>
             <Row>
-              <MenuItem selected={selectedMenuItem === 'contact'} delay={2.8} onClick={() => setSelectedMenuItem('contact')}>{t('contact')}</MenuItem>
+              <MenuItem selected={selectedMenuItem === 'contact'} delay={2.8} onClick={() => handleChangeMenuItem('contact')}>{t('contact')}</MenuItem>
               <Circle active={selectedMenuItem === 'contact'} />
             </Row>
           </MenuItems>
         </MenuItens>
       </MenuContainer>
       <ContentContainer delay={3} fadingOut={fadingOut}>
-        <IconContainer fadingOut={fadingOut}>
-          <AVM width={'60%'} color="var(--textColor)" />
-        </IconContainer>
+        {iconVisible && (
+          <IconContainer fadingOut={fadingOut}>
+            <AVM width={'60%'} color="var(--textColor)" />
+          </IconContainer>
+        )}
+        {!iconVisible && selectedMenuItem === 'about' && <About />}
       </ContentContainer>
     </Container>
   )
@@ -215,6 +231,8 @@ const IconContainer = styled.div`
   align-items: end;
   opacity: ${props => props.fadingOut ? 0 : 1};
   transition: opacity 0.5s ease-out;
+  align-items: end;
+  height: 450px;
 `;
 
 const Row = styled.div`

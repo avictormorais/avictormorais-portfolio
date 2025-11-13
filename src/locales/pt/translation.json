@@ -4,5 +4,15 @@
   "about": "Sobre",
   "experiences": "Experiências",
   "projects": "Projetos",
-  "contact": "Contato"
+  "contact": "Contato",
+  "about_name": "Victor Morais",
+  "about_intro_1": "Desenvolvedor Full Stack com mais de 1 ano de experiência em projetos reais como freelancer e estagiário. Estudante de Ciência da Computação (UEPB).",
+  "about_intro_2": "Especializado em aplicações web e mobile, com foco em código limpo, performance e experiência do usuário. Trabalho com metodologias ágeis e colaboração em equipe.",
+  "technologies_title": "Tecnologias & Ferramentas",
+  "technologies_desc": "Principais linguagens, frameworks e ferramentas com experiência prática e presença em projetos e repositórios públicos.",
+  "languages": "Linguagens",
+  "frameworks": "Frameworks e Bibliotecas",
+  "tools": "Ferramentas e Bancos de Dados",
+  "cv_title": "Currículo",
+  "download_cv": "Baixar Currículo"
 }
