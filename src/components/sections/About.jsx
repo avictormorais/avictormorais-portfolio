@@ -2,6 +2,8 @@ import styled, { keyframes } from "styled-components";
 import AVM from "../icons/AVM.jsx";
 import { Icon } from "@iconify/react";
 import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 
 const fadeIn = keyframes`
   from {
@@ -27,6 +29,41 @@ const fadeInOp = keyframes`
 
 export default function About({ visible }) {
     const { t } = useTranslation();
+    const containerRef = useRef(null);
+    const lenisRef = useRef(null);
+
+    useEffect(() => {
+        if (containerRef.current && !lenisRef.current) {
+            lenisRef.current = new Lenis({
+                wrapper: containerRef.current,
+                content: containerRef.current,
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+                touchMultiplier: 2,
+                infinite: false,
+            });
+
+            function raf(time) {
+                lenisRef.current.raf(time);
+                requestAnimationFrame(raf);
+            }
+
+            requestAnimationFrame(raf);
+        }
+
+        return () => {
+            if (lenisRef.current) {
+                lenisRef.current.destroy();
+                lenisRef.current = null;
+            }
+        };
+    }, []);
+
     const languages = [
         { name: "JavaScript", icon: "simple-icons:javascript" },
         { name: "Python", icon: "simple-icons:python" },
@@ -59,7 +96,7 @@ export default function About({ visible }) {
     ];
 
     return (
-        <Container visible={visible}>
+        <Container visible={visible} ref={containerRef}>
             <ContainerIcon delay={0.2}>
                 <AVM width={'150px'} color="var(--textColor)" />
             </ContainerIcon>
