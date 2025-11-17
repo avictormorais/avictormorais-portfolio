@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppContext } from './contexts/AppContext.jsx'
 import styled, { keyframes } from 'styled-components'
@@ -6,6 +6,8 @@ import { Icon } from '@iconify/react'
 import AVM from './components/icons/AVM.jsx'
 import Loading from './components/commom/Loading.jsx'
 import About from './components/sections/About.jsx'
+import Experiences from './components/sections/Experiences.jsx'
+import Lenis from 'lenis'
 
 const fadeIn = keyframes`
   from {
@@ -37,6 +39,10 @@ function App() {
   const [fadingOut, setFadingOut] = useState(false)
   const [iconVisible, setIconVisible] = useState(true)
   const [aboutMounted, setAboutMounted] = useState(false)
+  const [experiencesMounted, setExperiencesMounted] = useState(false)
+  const wrapperRef = useRef(null)
+  const contentRef = useRef(null)
+  const lenisRef = useRef(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,6 +51,38 @@ function App() {
 
     return () => clearTimeout(timer)
   }, [])
+
+  useEffect(() => {
+    if (wrapperRef.current && contentRef.current && !iconVisible && !lenisRef.current) {
+      lenisRef.current = new Lenis({
+        wrapper: wrapperRef.current,
+        content: contentRef.current,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+      })
+
+      function raf(time) {
+        lenisRef.current?.raf(time)
+        requestAnimationFrame(raf)
+      }
+
+      requestAnimationFrame(raf)
+    }
+
+    return () => {
+      if (lenisRef.current) {
+        lenisRef.current.destroy()
+        lenisRef.current = null
+      }
+    }
+  }, [iconVisible])
 
   useEffect(() => {
     if (selectedMenuItem) {
@@ -59,13 +97,24 @@ function App() {
   useEffect(() => {
     if (selectedMenuItem === 'about') {
       setAboutMounted(true)
-    } else if (aboutMounted) {
+      const timer = setTimeout(() => {
+        setExperiencesMounted(false)
+      }, 500)
+      return () => clearTimeout(timer)
+    } else if (selectedMenuItem === 'experiences') {
+      setExperiencesMounted(true)
       const timer = setTimeout(() => {
         setAboutMounted(false)
       }, 500)
       return () => clearTimeout(timer)
+    } else if (selectedMenuItem && selectedMenuItem !== 'about' && selectedMenuItem !== 'experiences') {
+      const timer = setTimeout(() => {
+        setAboutMounted(false)
+        setExperiencesMounted(false)
+      }, 500)
+      return () => clearTimeout(timer)
     }
-  }, [selectedMenuItem, aboutMounted])
+  }, [selectedMenuItem])
 
   const handleChangeMenuItem = (item) => {
     const timer = setTimeout(() => {
@@ -113,12 +162,17 @@ function App() {
         </MenuItens>
       </MenuContainer>
       <ContentContainer delay={3} fadingOut={fadingOut}>
-        {iconVisible && (
-          <IconContainer fadingOut={fadingOut}>
-            <AVM width={'60%'} color="var(--textColor)" />
-          </IconContainer>
-        )}
-        {!iconVisible && aboutMounted && <About visible={selectedMenuItem === 'about'} />}
+        <ScrollWrapper ref={wrapperRef}>
+          <ScrollContent ref={contentRef}>
+            {iconVisible && (
+              <IconContainer fadingOut={fadingOut}>
+                <AVM width={'60%'} color="var(--textColor)" />
+              </IconContainer>
+            )}
+            {!iconVisible && aboutMounted && <About visible={selectedMenuItem === 'about'} />}
+            {!iconVisible && experiencesMounted && <Experiences visible={selectedMenuItem === 'experiences'} />}
+          </ScrollContent>
+        </ScrollWrapper>
       </ContentContainer>
     </Container>
   )
@@ -234,6 +288,23 @@ const ContentContainer = styled.div`
   animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;
 `;
 
+const ScrollWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+`;
+
+const ScrollContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+`;
+
 const IconContainer = styled.div`
   margin: 2rem;
   width: 100%;
@@ -244,7 +315,8 @@ const IconContainer = styled.div`
   opacity: ${props => props.fadingOut ? 0 : 1};
   transition: opacity 0.5s ease-out;
   align-items: end;
-  height: 450px;
+  height: 95dvh;
+  margin-top: auto;
 `;
 
 const Row = styled.div`

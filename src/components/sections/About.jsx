@@ -2,8 +2,6 @@ import styled, { keyframes } from "styled-components";
 import AVM from "../icons/AVM.jsx";
 import { Icon } from "@iconify/react";
 import { useTranslation } from 'react-i18next';
-import { useEffect, useRef } from 'react';
-import Lenis from 'lenis';
 
 const fadeIn = keyframes`
   from {
@@ -29,40 +27,6 @@ const fadeInOp = keyframes`
 
 export default function About({ visible }) {
     const { t } = useTranslation();
-    const containerRef = useRef(null);
-    const lenisRef = useRef(null);
-
-    useEffect(() => {
-        if (containerRef.current && !lenisRef.current) {
-            lenisRef.current = new Lenis({
-                wrapper: containerRef.current,
-                content: containerRef.current,
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: true,
-                mouseMultiplier: 1,
-                smoothTouch: false,
-                touchMultiplier: 2,
-                infinite: false,
-            });
-
-            function raf(time) {
-                lenisRef.current.raf(time);
-                requestAnimationFrame(raf);
-            }
-
-            requestAnimationFrame(raf);
-        }
-
-        return () => {
-            if (lenisRef.current) {
-                lenisRef.current.destroy();
-                lenisRef.current = null;
-            }
-        };
-    }, []);
 
     const languages = [
         { name: "JavaScript", icon: "simple-icons:javascript" },
@@ -96,7 +60,7 @@ export default function About({ visible }) {
     ];
 
     return (
-        <Container visible={visible} ref={containerRef}>
+        <Container visible={visible}>
             <ContainerIcon delay={0.2}>
                 <AVM width={'150px'} color="var(--textColor)" />
             </ContainerIcon>
@@ -159,16 +123,16 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
     padding-top: 3rem;
     padding-bottom: 2rem;
     padding-right: 30px;
+    padding-left: 2rem;
     margin-right: 0px;
     max-width: 1000px;
-    overflow-y: auto;
-    overflow-x: hidden;
     opacity: ${props => props.visible ? 1 : 0};
     transition: opacity 0.5s ease-out;
+    position: ${props => props.visible ? 'relative' : 'absolute'};
+    pointer-events: ${props => props.visible ? 'auto' : 'none'};
 `;
 
 const Row = styled.div`
