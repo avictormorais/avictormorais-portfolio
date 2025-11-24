@@ -114,7 +114,7 @@ const Container = styled.div`
     padding-right: 30px;
     padding-left: 2rem;
     margin-right: 0px;
-    max-width: 1000px;
+    max-width: 1100px;
     opacity: ${props => props.visible ? 1 : 0};
     transition: opacity 0.5s ease-out;
     position: ${props => props.visible ? 'relative' : 'absolute'};
@@ -125,7 +125,7 @@ const Title = styled.h1`
     font-size: 1.55rem;
     font-weight: bolder;
     color: var(--textColor);
-    margin-top: 1rem;
+    margin-top: -1rem;
     margin-bottom: 0.5rem;
     padding-bottom: 0;
     animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;

@@ -33,5 +33,19 @@
   "achievements_title": "Achievements & Certifications",
   "achievement_1": "Ethereum Blockchain Developer Bootcamp With Solidity (Udemy)",
   "achievement_2": "Git and Github (Udemy)",
-  "achievement_3": "Scrum and Kanban in Practice (Udemy)"
+  "achievement_3": "Scrum and Kanban in Practice (Udemy)",
+  "projects_title": "Projects",
+  "projects_intro": "Selection of projects developed in my free time and as a hobby, demonstrating creativity, experimentation with new technologies, attention to design, and continuous learning.",
+  "project_posterfy_desc": "Posterfy is a collaborative platform for creating, sharing, and discovering music posters. With an intuitive interface and customization tools, users produce their own designs, explore the community's collection, and interact with each other.",
+  "project_posterfy_highlight": "Posterfy already has over 600 active users across all continents of the planet, along with an active community on GitHub.",
+  "project_oratio_desc": "Oratio is an assistive technology solution developed to generate real-time subtitles during in-person classes, connecting a mobile app to desktop software via QR Code and local network. Created to support people with hearing disabilities, the system offers a simple, fast, and accessible experience.",
+  "project_oratio_highlight": "Oratio is the theme of my undergraduate thesis, originally a project developed in a Software Engineering course. Now with over 1 year of experience in the job market, I took the project as the theme of my work and recreated it in a more modern and robust way.",
+  "project_moviemetricks_desc": "Moviemetricks is a social media platform where you can share your favorite movies and series, see what your friends are watching, and comment on your opinion about them.",
+  "project_moviemetricks_highlight": "Developed halfway through my graduation as a final project for a course.",
+  "project_syncverse_desc": "A browser extension that synchronizes the lyrics of the song you're listening to on your favorite streaming service, using a PIP window to display the lyrics.",
+  "project_syncverse_highlight": "My first experience producing something out of the ordinary.",
+  "project_simpleblockchain_desc": "A simple and didactic blockchain in JavaScript, which runs in the console and demonstrates the basic principles of decentralization and immutability.",
+  "project_simpleblockchain_highlight": "First project developed during my internship in the area.",
+  "btn_github": "GitHub",
+  "btn_deploy": "Deploy"
 }

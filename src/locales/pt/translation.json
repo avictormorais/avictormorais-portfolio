@@ -33,5 +33,19 @@
   "achievements_title": "Conquistas & Certificações",
   "achievement_1": "Ethereum Blockchain Developer Bootcamp With Solidity (Udemy)",
   "achievement_2": "Git e Github (Udemy)",
-  "achievement_3": "Scrum e Kanban na prática (Udemy)"
+  "achievement_3": "Scrum e Kanban na prática (Udemy)",
+  "projects_title": "Projetos",
+  "projects_intro": "Seleção de projetos desenvolvidos no meu tempo livre e por hobby, demonstrando criatividade, experimentação com novas tecnologias, atenção ao design e aprendizado contínuo.",
+  "project_posterfy_desc": "Posterfy é uma plataforma colaborativa para criar, compartilhar e descobrir pôsteres de música. Com uma interface intuitiva e ferramentas de personalização, os usuários produzem seus próprios designs, exploram a coleção da comunidade e interagem entre si.",
+  "project_posterfy_highlight": "O Posterfy já conta com mais de 600 usuários ativos em todos os continentes do planeta, além de uma comunidade ativa no GitHub.",
+  "project_oratio_desc": "Oratio é uma solução de tecnologia assistiva desenvolvida para gerar legendas em tempo real durante aulas presenciais, conectando um aplicativo mobile ao software desktop via QR Code e rede local. Criado para apoiar pessoas com deficiência auditiva, o sistema oferece uma experiência simples, rápida e acessível.",
+  "project_oratio_highlight": "O Oratio é tema do meu TCC, originalmente um projeto desenvolvido em uma disciplina de Engenharia de Software. Agora com mais de 1 ano de experiência no mercado de trabalho peguei o projeto para ser tema do meu trabalho e recriei-o de forma mais moderna e robusta.",
+  "project_moviemetricks_desc": "Moviemetricks é uma plataforma de mídia social onde você pode compartilhar seus filmes e séries favoritos, ver o que seus amigos estão assistindo e comentar sua opinião sobre eles.",
+  "project_moviemetricks_highlight": "Desenvolvido na metade da minha graduação como projeto final para uma disciplina.",
+  "project_syncverse_desc": "Uma extensão para navegador que sincroniza a letra da música que você está ouvindo no seu serviço de streaming favorito, utilizando uma janela PIP para exibir a letra.",
+  "project_syncverse_highlight": "Minha primeira experiência produzindo algo fora do usual.",
+  "project_simpleblockchain_desc": "Uma blockchain simples e didática em JavaScript, que roda no console e demonstra os princípios básicos de descentralização e imutabilidade.",
+  "project_simpleblockchain_highlight": "Primeiro projeto desenvolvido durante meu estágio na área.",
+  "btn_github": "GitHub",
+  "btn_deploy": "Deploy"
 }

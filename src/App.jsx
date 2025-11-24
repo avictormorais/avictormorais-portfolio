@@ -7,6 +7,7 @@ import AVM from './components/icons/AVM.jsx'
 import Loading from './components/commom/Loading.jsx'
 import About from './components/sections/About.jsx'
 import Experiences from './components/sections/Experiences.jsx'
+import Projects from './components/sections/Projects.jsx'
 import Lenis from 'lenis'
 
 const fadeIn = keyframes`
@@ -40,6 +41,7 @@ function App() {
   const [iconVisible, setIconVisible] = useState(true)
   const [aboutMounted, setAboutMounted] = useState(false)
   const [experiencesMounted, setExperiencesMounted] = useState(false)
+  const [projectsMounted, setProjectsMounted] = useState(false)
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
   const lenisRef = useRef(null)
@@ -99,18 +101,28 @@ function App() {
       setAboutMounted(true)
       const timer = setTimeout(() => {
         setExperiencesMounted(false)
+        setProjectsMounted(false)
       }, 500)
       return () => clearTimeout(timer)
     } else if (selectedMenuItem === 'experiences') {
       setExperiencesMounted(true)
       const timer = setTimeout(() => {
         setAboutMounted(false)
+        setProjectsMounted(false)
       }, 500)
       return () => clearTimeout(timer)
-    } else if (selectedMenuItem && selectedMenuItem !== 'about' && selectedMenuItem !== 'experiences') {
+    } else if (selectedMenuItem === 'projects') {
+      setProjectsMounted(true)
       const timer = setTimeout(() => {
         setAboutMounted(false)
         setExperiencesMounted(false)
+      }, 500)
+      return () => clearTimeout(timer)
+    } else if (selectedMenuItem && selectedMenuItem !== 'about' && selectedMenuItem !== 'experiences' && selectedMenuItem !== 'projects') {
+      const timer = setTimeout(() => {
+        setAboutMounted(false)
+        setExperiencesMounted(false)
+        setProjectsMounted(false)
       }, 500)
       return () => clearTimeout(timer)
     }
@@ -171,6 +183,7 @@ function App() {
             )}
             {!iconVisible && aboutMounted && <About visible={selectedMenuItem === 'about'} />}
             {!iconVisible && experiencesMounted && <Experiences visible={selectedMenuItem === 'experiences'} />}
+            {!iconVisible && projectsMounted && <Projects visible={selectedMenuItem === 'projects'} />}
           </ScrollContent>
         </ScrollWrapper>
       </ContentContainer>
