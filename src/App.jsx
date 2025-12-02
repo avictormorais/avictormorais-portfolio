@@ -8,6 +8,7 @@ import Loading from './components/commom/Loading.jsx'
 import About from './components/sections/About.jsx'
 import Experiences from './components/sections/Experiences.jsx'
 import Projects from './components/sections/Projects.jsx'
+import Contact from './components/sections/Contact.jsx'
 import Lenis from 'lenis'
 
 const fadeIn = keyframes`
@@ -42,6 +43,7 @@ function App() {
   const [aboutMounted, setAboutMounted] = useState(false)
   const [experiencesMounted, setExperiencesMounted] = useState(false)
   const [projectsMounted, setProjectsMounted] = useState(false)
+  const [contactMounted, setContactMounted] = useState(false)
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
   const lenisRef = useRef(null)
@@ -102,6 +104,7 @@ function App() {
       const timer = setTimeout(() => {
         setExperiencesMounted(false)
         setProjectsMounted(false)
+        setContactMounted(false)
       }, 500)
       return () => clearTimeout(timer)
     } else if (selectedMenuItem === 'experiences') {
@@ -109,6 +112,7 @@ function App() {
       const timer = setTimeout(() => {
         setAboutMounted(false)
         setProjectsMounted(false)
+        setContactMounted(false)
       }, 500)
       return () => clearTimeout(timer)
     } else if (selectedMenuItem === 'projects') {
@@ -116,13 +120,23 @@ function App() {
       const timer = setTimeout(() => {
         setAboutMounted(false)
         setExperiencesMounted(false)
+        setContactMounted(false)
       }, 500)
       return () => clearTimeout(timer)
-    } else if (selectedMenuItem && selectedMenuItem !== 'about' && selectedMenuItem !== 'experiences' && selectedMenuItem !== 'projects') {
+    } else if (selectedMenuItem === 'contact') {
+      setContactMounted(true)
       const timer = setTimeout(() => {
         setAboutMounted(false)
         setExperiencesMounted(false)
         setProjectsMounted(false)
+      }, 500)
+      return () => clearTimeout(timer)
+    } else if (selectedMenuItem && selectedMenuItem !== 'about' && selectedMenuItem !== 'experiences' && selectedMenuItem !== 'projects' && selectedMenuItem !== 'contact') {
+      const timer = setTimeout(() => {
+        setAboutMounted(false)
+        setExperiencesMounted(false)
+        setProjectsMounted(false)
+        setContactMounted(false)
       }, 500)
       return () => clearTimeout(timer)
     }
@@ -184,6 +198,7 @@ function App() {
             {!iconVisible && aboutMounted && <About visible={selectedMenuItem === 'about'} />}
             {!iconVisible && experiencesMounted && <Experiences visible={selectedMenuItem === 'experiences'} />}
             {!iconVisible && projectsMounted && <Projects visible={selectedMenuItem === 'projects'} />}
+            {!iconVisible && contactMounted && <Contact visible={selectedMenuItem === 'contact'} />}
           </ScrollContent>
         </ScrollWrapper>
       </ContentContainer>
