@@ -1,64 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
-
-*{
-  font-family: Rubik, sans-serif;
-  margin: 0px;
-  padding: 0px;
-  text-decoration: none;
-  color: var(--primary-text-color);
-  transition: all .3s ease-in-out;
+:root {
+  --backgroundColor: #0a0a0a;
+  --textColor: #dce0df;
+  --textColor-rgb: 220, 224, 223;
+  --alwaysWhite: #dce0df;
 }
 
-:root{
-  --primary-color: #f0efeb;
-  --secondary-color: #e6e4dd;
-  --accent-color: #000000;
-  --primary-text-color: #2c2929;
-  --secondary-text-color: white;
-  --padding-inline-layout: 70px;
-  --content-font: 'Cinzel', serif;
+[data-theme="dark"] {
+  --backgroundColor: #dce0df;
+  --textColor: #121212;
+  --textColor-rgb: 18, 18, 18;
 }
 
-[data-theme="dark"]{
-  --primary-color: #070815;
-  --secondary-color: #141521;
-  --accent-color: white;
-  --primary-text-color: white;
-  --secondary-text-color: black;
-}
+* {
+  font-family: 'Molengo', 'Fraunces', Avenir, Helvetica, Arial, sans-serif;
+  color: var(--textColor);
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 0.5s, background-color 0.5s;
+  letter-spacing: 2px;
 
-@media (max-width: 700px) {
-  :root{
-    --padding-inline-layout: 35px;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+    margin: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--textColor);
+    opacity: 0.4;
+    border-radius: 3px;
   }
 }
 
-Link{
-  text-decoration: none;
-  border: none;
-}
-
-body, #root, .App{
-  background-color: var(--primary-color);
+body {
   margin: 0;
-  padding: 0;
-  color: var(--primary-text-color);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--backgroundColor);
   overflow-x: hidden;
-  width: 100vw;
+  overflow-y: auto;
 }
 
-*::-webkit-scrollbar {
-  width: 15px;
-  background-color: var(--secondary-color);
+::selection {
+  background: var(--textColor);
+  color: var(--backgroundColor);
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: var(--primary-text-color);
-  border-radius: 10px;
-  border: 3px solid var(--secondary-color);
+::-moz-selection {
+  background: var(--textColor);
+  color: var(--backgroundColor);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: rgba(var(--textColor-rgb), 0.4) transparent;
+    scrollbar-width: thin;
+  }
 }
