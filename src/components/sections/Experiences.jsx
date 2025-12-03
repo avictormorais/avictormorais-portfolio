@@ -111,13 +111,14 @@ const Container = styled.div`
     width: 100%;
     padding-top: 3rem;
     padding-bottom: 2rem;
-    padding-right: 30px;
-    padding-left: 2rem;
+    padding-right: ${props => props.isMobile ? '1rem' : '30px'};
+    padding-left: ${props => props.isMobile ? '1rem' : '2rem'};
     margin-right: 0px;
-    max-width: 1100px;
+    max-width: ${props => props.isMobile ? '100%' : '1100px'};
+    box-sizing: border-box;
     opacity: ${props => props.visible ? 1 : 0};
     transition: opacity 0.5s ease-out;
-    position: ${props => props.visible ? 'relative' : 'absolute'};
+    position: ${props => props.isMobile ? 'relative' : (props.visible ? 'relative' : 'absolute')};
     pointer-events: ${props => props.visible ? 'auto' : 'none'};
 `;
 
@@ -147,6 +148,8 @@ const ExperiencesSection = styled.div`
     flex-direction: column;
     gap: 1.5rem;
     margin-top: 2rem;
+    box-sizing: border-box;
+    max-width: 100%;
 `;
 
 const ExperienceCard = styled.div`
@@ -158,6 +161,8 @@ const ExperienceCard = styled.div`
     border: 2px solid var(--textColor);
     opacity: 0.9;
     transition: all 0.3s ease;
+    box-sizing: border-box;
+    max-width: 100%;
     animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;
 
     &:hover {
@@ -171,6 +176,12 @@ const ExperienceHeader = styled.div`
     display: flex;
     align-items: flex-start;
     gap: 1rem;
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 `;
 
 const IconWrapper = styled.div`
@@ -188,6 +199,11 @@ const ExperienceTitle = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
+    
+    @media (max-width: 768px) {
+        align-items: center;
+        width: 100%;
+    }
 `;
 
 const Role = styled.h3`
@@ -211,6 +227,11 @@ const Period = styled.span`
     color: var(--textColor);
     opacity: 0.7;
     white-space: nowrap;
+    
+    @media (max-width: 768px) {
+        white-space: normal;
+        text-align: center;
+    }
 `;
 
 const Description = styled.p`

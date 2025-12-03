@@ -29,12 +29,19 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 2rem;
-  max-width: 800px;
+  padding: ${props => props.isMobile ? '2rem 1rem' : '2rem'};
+  max-width: ${props => props.isMobile ? '100%' : '800px'};
+  width: 100%;
+  box-sizing: border-box;
   margin: 0 auto;
   opacity: ${props => props.visible ? 1 : 0};
   transform: ${props => props.visible ? 'translateY(0)' : 'translateY(20px)'};
   transition: opacity 0.5s ease, transform 0.5s ease;
+  
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    text-align: left;
+  }
 `;
 
 const Title = styled.h1`
@@ -43,6 +50,10 @@ const Title = styled.h1`
   color: var(--textColor);
   margin-bottom: 1rem;
   animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const IntroText = styled.p`
@@ -53,14 +64,24 @@ const IntroText = styled.p`
   margin-bottom: 2rem;
   line-height: 1.5;
   animation: ${fadeInOp} 0.5s ease-out ${props => props.delay || 0}s both;
+  
+  @media (max-width: 768px) {
+    font-size: 1.05rem;
+  }
 `;
 
 const ContactList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   margin-bottom: 3rem;
+  
+  @media (max-width: 768px) {
+    gap: 0.75rem;
+  }
 `;
 
 const ContactItem = styled.a`
@@ -73,7 +94,15 @@ const ContactItem = styled.a`
   border: 1px solid rgba(var(--textColor-rgb), 0.1);
   transition: all 0.3s ease;
   text-decoration: none;
+  box-sizing: border-box;
+  max-width: 100%;
   animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    gap: 1rem;
+    border-radius: 10px;
+  }
 
   &:hover {
     transform: translateY(-4px);
@@ -91,6 +120,12 @@ const ContactIcon = styled.div`
   border-radius: 12px;
   background-color: rgba(var(--textColor-rgb), 0.1);
   flex-shrink: 0;
+  
+  @media (max-width: 768px) {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+  }
 `;
 
 const ContactContent = styled.div`
@@ -105,13 +140,22 @@ const ContactName = styled.span`
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--textColor);
+  
+  @media (max-width: 768px) {
+    font-size: 1.05rem;
+  }
 `;
 
 const ContactDescription = styled.span`
   font-size: 0.95rem;
   color: var(--textColor);
   opacity: 0.8;
+  text-align: left;
   line-height: 1.4;
+  
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+  }
 `;
 
 const ThankYouSection = styled.div`

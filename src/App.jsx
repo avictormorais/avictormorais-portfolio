@@ -5,6 +5,7 @@ import styled, { keyframes } from 'styled-components'
 import { Icon } from '@iconify/react'
 import AVM from './components/icons/AVM.jsx'
 import Loading from './components/commom/Loading.jsx'
+import MobileHeader from './components/common/MobileHeader.jsx'
 import About from './components/sections/About.jsx'
 import Experiences from './components/sections/Experiences.jsx'
 import Projects from './components/sections/Projects.jsx'
@@ -44,6 +45,7 @@ function App() {
   const [experiencesMounted, setExperiencesMounted] = useState(false)
   const [projectsMounted, setProjectsMounted] = useState(false)
   const [contactMounted, setContactMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
   const lenisRef = useRef(null)
@@ -51,7 +53,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
-    }, 1500)
+    }, 2500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -99,48 +101,66 @@ function App() {
   }, [selectedMenuItem])
 
   useEffect(() => {
-    if (selectedMenuItem === 'about') {
-      setAboutMounted(true)
-      const timer = setTimeout(() => {
-        setExperiencesMounted(false)
-        setProjectsMounted(false)
-        setContactMounted(false)
-      }, 500)
-      return () => clearTimeout(timer)
-    } else if (selectedMenuItem === 'experiences') {
-      setExperiencesMounted(true)
-      const timer = setTimeout(() => {
-        setAboutMounted(false)
-        setProjectsMounted(false)
-        setContactMounted(false)
-      }, 500)
-      return () => clearTimeout(timer)
-    } else if (selectedMenuItem === 'projects') {
-      setProjectsMounted(true)
-      const timer = setTimeout(() => {
-        setAboutMounted(false)
-        setExperiencesMounted(false)
-        setContactMounted(false)
-      }, 500)
-      return () => clearTimeout(timer)
-    } else if (selectedMenuItem === 'contact') {
-      setContactMounted(true)
-      const timer = setTimeout(() => {
-        setAboutMounted(false)
-        setExperiencesMounted(false)
-        setProjectsMounted(false)
-      }, 500)
-      return () => clearTimeout(timer)
-    } else if (selectedMenuItem && selectedMenuItem !== 'about' && selectedMenuItem !== 'experiences' && selectedMenuItem !== 'projects' && selectedMenuItem !== 'contact') {
-      const timer = setTimeout(() => {
-        setAboutMounted(false)
-        setExperiencesMounted(false)
-        setProjectsMounted(false)
-        setContactMounted(false)
-      }, 500)
-      return () => clearTimeout(timer)
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 1024)
     }
-  }, [selectedMenuItem])
+
+    checkIsMobile()
+    window.addEventListener('resize', checkIsMobile)
+
+    return () => window.removeEventListener('resize', checkIsMobile)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) {
+      setAboutMounted(true)
+      setExperiencesMounted(true)
+      setProjectsMounted(true)
+      setContactMounted(true)
+    } else {
+      if (selectedMenuItem === 'about') {
+        setAboutMounted(true)
+        const timer = setTimeout(() => {
+          setExperiencesMounted(false)
+          setProjectsMounted(false)
+          setContactMounted(false)
+        }, 500)
+        return () => clearTimeout(timer)
+      } else if (selectedMenuItem === 'experiences') {
+        setExperiencesMounted(true)
+        const timer = setTimeout(() => {
+          setAboutMounted(false)
+          setProjectsMounted(false)
+          setContactMounted(false)
+        }, 500)
+        return () => clearTimeout(timer)
+      } else if (selectedMenuItem === 'projects') {
+        setProjectsMounted(true)
+        const timer = setTimeout(() => {
+          setAboutMounted(false)
+          setExperiencesMounted(false)
+          setContactMounted(false)
+        }, 500)
+        return () => clearTimeout(timer)
+      } else if (selectedMenuItem === 'contact') {
+        setContactMounted(true)
+        const timer = setTimeout(() => {
+          setAboutMounted(false)
+          setExperiencesMounted(false)
+          setProjectsMounted(false)
+        }, 500)
+        return () => clearTimeout(timer)
+      } else if (selectedMenuItem && selectedMenuItem !== 'about' && selectedMenuItem !== 'experiences' && selectedMenuItem !== 'projects' && selectedMenuItem !== 'contact') {
+        const timer = setTimeout(() => {
+          setAboutMounted(false)
+          setExperiencesMounted(false)
+          setProjectsMounted(false)
+          setContactMounted(false)
+        }, 500)
+        return () => clearTimeout(timer)
+      }
+    }
+  }, [selectedMenuItem, isMobile])
 
   const handleChangeMenuItem = (item) => {
     const timer = setTimeout(() => {
@@ -150,70 +170,83 @@ function App() {
   }
 
   return (
-    <Container>
+    <Container isMobile={isMobile}>
       <Loading active={loading} />
-      <MenuContainer>
-        <MenuItens>
-          <Controls delay={2}>
-            <IconButton onClick={toggleTheme} key={theme}>
-              <Icon 
-                icon={theme === 'light' ? 'line-md:moon-filled-to-sunny-filled-loop-transition' : 'line-md:sunny-filled-loop-to-moon-filled-loop-transition'} 
-                width={'20px'}
-              />
-
-            </IconButton>
-            <LanguageSelector>
-              <LangButton active={language === 'pt'} onClick={() => changeLanguage('pt')}>PT</LangButton>
-              <LangButton active={language === 'en'} onClick={() => changeLanguage('en')}>EN</LangButton>
-            </LanguageSelector>
-          </Controls>
-          <MenuItems>
-            <Row>
-              <MenuItem selected={selectedMenuItem === 'about'} delay={2.2} onClick={() => handleChangeMenuItem('about')}>{t('about')}</MenuItem>
-              <Circle active={selectedMenuItem === 'about'} />
-            </Row>
-            <Row>
-              <MenuItem selected={selectedMenuItem === 'experiences'} delay={2.4} onClick={() => handleChangeMenuItem('experiences')}>{t('experiences')}</MenuItem>
-              <Circle active={selectedMenuItem === 'experiences'} />
-            </Row>
-            <Row>
-              <MenuItem selected={selectedMenuItem === 'projects'} delay={2.6} onClick={() => handleChangeMenuItem('projects')}>{t('projects')}</MenuItem>
-              <Circle active={selectedMenuItem === 'projects'} />
-            </Row>
-            <Row>
-              <MenuItem selected={selectedMenuItem === 'contact'} delay={2.8} onClick={() => handleChangeMenuItem('contact')}>{t('contact')}</MenuItem>
-              <Circle active={selectedMenuItem === 'contact'} />
-            </Row>
-          </MenuItems>
-        </MenuItens>
-      </MenuContainer>
-      <ContentContainer delay={3} fadingOut={fadingOut}>
-        <ScrollWrapper ref={wrapperRef}>
-          <ScrollContent ref={contentRef}>
+      {!isMobile && (
+        <MenuContainer>
+          <MenuItens>
+            <Controls delay={2}>
+              <IconButton onClick={toggleTheme} key={theme}>
+                <Icon 
+                  icon={theme === 'light' ? 'line-md:moon-filled-to-sunny-filled-loop-transition' : 'line-md:sunny-filled-loop-to-moon-filled-loop-transition'} 
+                  width={'20px'}
+                />
+              </IconButton>
+              <LanguageSelector>
+                <LangButton active={language === 'pt'} onClick={() => changeLanguage('pt')}>PT</LangButton>
+                <LangButton active={language === 'en'} onClick={() => changeLanguage('en')}>EN</LangButton>
+              </LanguageSelector>
+            </Controls>
+            <MenuItems>
+              <Row>
+                <MenuItem selected={selectedMenuItem === 'about'} delay={2.2} onClick={() => handleChangeMenuItem('about')}>{t('about')}</MenuItem>
+                <Circle active={selectedMenuItem === 'about'} />
+              </Row>
+              <Row>
+                <MenuItem selected={selectedMenuItem === 'experiences'} delay={2.4} onClick={() => handleChangeMenuItem('experiences')}>{t('experiences')}</MenuItem>
+                <Circle active={selectedMenuItem === 'experiences'} />
+              </Row>
+              <Row>
+                <MenuItem selected={selectedMenuItem === 'projects'} delay={2.6} onClick={() => handleChangeMenuItem('projects')}>{t('projects')}</MenuItem>
+                <Circle active={selectedMenuItem === 'projects'} />
+              </Row>
+              <Row>
+                <MenuItem selected={selectedMenuItem === 'contact'} delay={2.8} onClick={() => handleChangeMenuItem('contact')}>{t('contact')}</MenuItem>
+                <Circle active={selectedMenuItem === 'contact'} />
+              </Row>
+            </MenuItems>
+          </MenuItens>
+        </MenuContainer>
+      )}
+      {isMobile ? (
+        <>
+          <MobileHeader delay={2} />
+          <MobileSectionWrapper>
+            <About visible={true} isMobile={isMobile} />
+            <Experiences visible={true} isMobile={isMobile} />
+            <Projects visible={true} isMobile={isMobile} />
+            <Contact visible={true} isMobile={isMobile} />
+          </MobileSectionWrapper>
+        </>
+      ) : (
+        <ScrollWrapper ref={wrapperRef} isMobile={isMobile}>
+          <ScrollContent ref={contentRef} isMobile={isMobile}>
             {iconVisible && (
               <IconContainer fadingOut={fadingOut}>
                 <AVM width={'60%'} color="var(--textColor)" />
               </IconContainer>
             )}
-            {!iconVisible && aboutMounted && <About visible={selectedMenuItem === 'about'} />}
-            {!iconVisible && experiencesMounted && <Experiences visible={selectedMenuItem === 'experiences'} />}
-            {!iconVisible && projectsMounted && <Projects visible={selectedMenuItem === 'projects'} />}
-            {!iconVisible && contactMounted && <Contact visible={selectedMenuItem === 'contact'} />}
+            {!iconVisible && aboutMounted && <About visible={selectedMenuItem === 'about'} isMobile={isMobile} />}
+            {!iconVisible && experiencesMounted && <Experiences visible={selectedMenuItem === 'experiences'} isMobile={isMobile} />}
+            {!iconVisible && projectsMounted && <Projects visible={selectedMenuItem === 'projects'} isMobile={isMobile} />}
+            {!iconVisible && contactMounted && <Contact visible={selectedMenuItem === 'contact'} isMobile={isMobile} />}
           </ScrollContent>
         </ScrollWrapper>
-      </ContentContainer>
+      )}
     </Container>
   )
 }
 
 const Container = styled.div`
-  height: 100dvh;
+  min-height: 100dvh;
+  height: ${props => props.isMobile ? 'auto' : '100dvh'};
   width: 100dvw;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  overflow: hidden;
+  align-items: ${props => props.isMobile ? 'flex-start' : 'center'};
+  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
+  overflow: ${props => props.isMobile ? 'visible' : 'hidden'};
+  overflow-x: hidden;
 `;
 
 const MenuContainer = styled.div`
@@ -309,28 +342,28 @@ const MenuItem = styled.h2`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  align-items: end;
-  justify-content: end;
+  width: ${props => props.isMobile ? '100%' : '100%'};
+  height: ${props => props.isMobile ? 'auto' : '100%'};
+  align-items: ${props => props.isMobile ? 'stretch' : 'end'};
+  justify-content: ${props => props.isMobile ? 'flex-start' : 'end'};
   animation: ${fadeIn} 0.5s ease-out ${props => props.delay || 0}s both;
 `;
 
 const ScrollWrapper = styled.div`
   width: 100%;
-  height: 100%;
-  overflow-y: auto;
+  height: ${props => props.isMobile ? 'auto' : '100%'};
+  overflow-y: ${props => props.isMobile ? 'visible' : 'auto'};
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: ${props => props.isMobile ? 'center' : 'end'};
 `;
 
 const ScrollContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: ${props => props.isMobile ? 'center' : 'end'};
 `;
 
 const IconContainer = styled.div`
@@ -363,6 +396,17 @@ const Circle = styled.div`
   margin-left: 5px;
   opacity: ${props => props.active ? 0.5 : 0};
   transition: all 0.3s ease-in-out;
+`;
+
+const MobileSectionWrapper = styled.div`
+  width: 100%;
+  max-width: 100vw;
+  padding: 0;
+  padding-top: 72px; /* Altura do header fixo */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-sizing: border-box;
 `;
 
 export default App

@@ -244,13 +244,14 @@ const Container = styled.div`
     width: 100%;
     padding-top: 3rem;
     padding-bottom: 2rem;
-    padding-right: 30px;
-    padding-left: 2rem;
+    padding-right: ${props => props.isMobile ? '1rem' : '30px'};
+    padding-left: ${props => props.isMobile ? '1rem' : '2rem'};
     margin-right: 0px;
-    max-width: 1100px;
+    max-width: ${props => props.isMobile ? '100%' : '1100px'};
+    box-sizing: border-box;
     opacity: ${props => props.visible ? 1 : 0};
     transition: opacity 0.5s ease-out;
-    position: ${props => props.visible ? 'relative' : 'absolute'};
+    position: ${props => props.isMobile ? 'relative' : (props.visible ? 'relative' : 'absolute')};
     pointer-events: ${props => props.visible ? 'auto' : 'none'};
 `;
 
@@ -281,6 +282,8 @@ const ProjectsSection = styled.div`
     gap: 2rem;
     margin-top: 2rem;
     margin-bottom: 4rem;
+    box-sizing: border-box;
+    max-width: 100%;
 `;
 
 const ProjectCard = styled.div`
@@ -291,6 +294,8 @@ const ProjectCard = styled.div`
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--textColor);
     opacity: 0.2;
+    box-sizing: border-box;
+    max-width: 100%;
 
     &:last-child {
         border-bottom: none;

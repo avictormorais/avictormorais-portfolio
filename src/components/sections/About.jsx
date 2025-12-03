@@ -125,13 +125,14 @@ const Container = styled.div`
     width: 100%;
     padding-top: 3rem;
     padding-bottom: 2rem;
-    padding-right: 30px;
-    padding-left: 2rem;
+    padding-right: ${props => props.isMobile ? '1rem' : '30px'};
+    padding-left: ${props => props.isMobile ? '1rem' : '2rem'};
     margin-right: 0px;
-    max-width: 1100px;
+    max-width: ${props => props.isMobile ? '100%' : '1100px'};
+    box-sizing: border-box;
     opacity: ${props => props.visible ? 1 : 0};
     transition: opacity 0.5s ease-out;
-    position: ${props => props.visible ? 'relative' : 'absolute'};
+    position: ${props => props.isMobile ? 'relative' : (props.visible ? 'relative' : 'absolute')};
     pointer-events: ${props => props.visible ? 'auto' : 'none'};
 `;
 
@@ -166,6 +167,8 @@ const StackSection = styled.div`
     flex-direction: column;
     gap: 1.25rem;
     margin-top: 1.5rem;
+    box-sizing: border-box;
+    max-width: 100%;
 `;
 
 const StackCategory = styled.div`
@@ -187,6 +190,9 @@ const TechGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
     gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     
     @media (max-width: 768px) {
         grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));

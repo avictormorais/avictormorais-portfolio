@@ -13,12 +13,15 @@ const Container = styled.div`
     height: 100dvh;
     width: 100dvw;
     position: fixed;
+    top: 0;
+    left: 0;
     background-color: var(--backgroundColor);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: ${props => props.active ? 1 : 0};
-    transition: opacity 0.5s ease-in-out;
+    visibility: ${props => props.active ? 'visible' : 'hidden'};
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
     pointer-events: ${props => props.active ? 'auto' : 'none'};
-    z-index: 1000;
+    z-index: 9999;
 `;
