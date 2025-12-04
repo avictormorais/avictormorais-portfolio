@@ -84,7 +84,7 @@ export default function Projects({ visible }) {
                 O5
             ],
             technologies: ["React", "React Native", "Electron", "Express", "Node.js", "WebSocket", "Expo"],
-            github: "https://github.com",
+            github: "https://github.com/avictormorais/Oratio",
             deploy: "https://useoratio.vercel.app/"
         },
         {
