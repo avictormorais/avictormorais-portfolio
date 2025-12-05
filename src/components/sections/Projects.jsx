@@ -55,6 +55,8 @@ export default function Projects({ visible }) {
     const { t } = useTranslation();
     const [activeImageIndex, setActiveImageIndex] = useState({});
     const [isTransitioning, setIsTransitioning] = useState({});
+    const [touchStart, setTouchStart] = useState({});
+    const [touchEnd, setTouchEnd] = useState({});
 
     const projects = [
         {
@@ -155,6 +157,30 @@ export default function Projects({ visible }) {
         }, 200);
     };
 
+    const handleTouchStart = (e, projectIndex) => {
+        setTouchEnd({ ...touchEnd, [projectIndex]: null });
+        setTouchStart({ ...touchStart, [projectIndex]: e.targetTouches[0].clientX });
+    };
+
+    const handleTouchMove = (e, projectIndex) => {
+        setTouchEnd({ ...touchEnd, [projectIndex]: e.targetTouches[0].clientX });
+    };
+
+    const handleTouchEnd = (projectIndex) => {
+        if (!touchStart[projectIndex] || !touchEnd[projectIndex]) return;
+        
+        const distance = touchStart[projectIndex] - touchEnd[projectIndex];
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe) {
+            handleNextImage(projectIndex);
+        }
+        if (isRightSwipe) {
+            handlePrevImage(projectIndex);
+        }
+    };
+
     return (
         <Container visible={visible}>
             <Title delay={0.2}>{t('projects_title')}</Title>
@@ -179,7 +205,11 @@ export default function Projects({ visible }) {
                         {project.images && project.images.length > 0 && (
                             <>
                                 <ImageSlider>
-                                    <ImageContainer>
+                                    <ImageContainer
+                                        onTouchStart={(e) => handleTouchStart(e, index)}
+                                        onTouchMove={(e) => handleTouchMove(e, index)}
+                                        onTouchEnd={() => handleTouchEnd(index)}
+                                    >
                                         <ProjectImage 
                                             src={project.images[activeImageIndex[index] || 0]} 
                                             alt={`${project.name} screenshot`}
@@ -357,6 +387,8 @@ const ImageContainer = styled.div`
     border-radius: 8px;
     overflow: hidden;
     aspect-ratio: 16 / 9;
+    touch-action: pan-y;
+    user-select: none;
 
     &:hover button {
         opacity: 0.7;
