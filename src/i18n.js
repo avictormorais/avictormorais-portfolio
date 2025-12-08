@@ -12,15 +12,26 @@ const resources = {
   }
 }
 
+const getBrowserLanguage = () => {
+  const lang = navigator.language || navigator.userLanguage
+  return lang.startsWith('en') ? 'en' : 'pt'
+}
+
+const detectedLanguage = getBrowserLanguage()
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: localStorage.getItem('language') || 'pt',
+    lng: localStorage.getItem('language') || detectedLanguage,
     fallbackLng: 'pt',
     interpolation: {
       escapeValue: false
     }
   })
+
+if (!localStorage.getItem('language')) {
+  localStorage.setItem('language', detectedLanguage)
+}
 
 export default i18n
