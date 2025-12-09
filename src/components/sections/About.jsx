@@ -111,7 +111,7 @@ export default function About({ visible }) {
             <CVSection delay={2.2}>
                 <Title>{t('cv_title')}</Title>
                 <Paragraph>{t('cv_description')}</Paragraph>
-                <CVButton href="/curriculum.pdf" aria-label={t('download_cv')}>
+                <CVButton href="/curriculo_avm.pdf" target="_blank" rel="noopener noreferrer" aria-label={t('download_cv')}>
                     {t('download_cv')}
                 </CVButton>
             </CVSection>
