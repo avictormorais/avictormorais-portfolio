@@ -84,7 +84,7 @@ export default function Experiences({ visible }) {
                 ))}
             </ExperiencesSection>
 
-            <AchievementsSection delay={2.6}>
+            <AchievementsSection delay={1.4}>
                 <Title>{t('achievements_title')}</Title>
                 <AchievementsList>
                     <AchievementItem>
