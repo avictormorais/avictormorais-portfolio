@@ -231,6 +231,7 @@ export default function Projects({ visible }) {
                                                     onClick={() => {
                                                         setIsTransitioning(prev => ({ ...prev, [index]: true }));
                                                         setTimeout(() => {
+                                                            setActiveImageIndex(prev => ({ ...prev, [index]: imgIndex }));
                                                             setIsTransitioning(prev => ({ ...prev, [index]: false }));
                                                         }, 200);
                                                     }}
