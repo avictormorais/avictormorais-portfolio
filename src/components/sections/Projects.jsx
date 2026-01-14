@@ -137,9 +137,7 @@ export default function Projects({ visible }) {
                 const newIndex = currentIndex === 0 ? projects[projectIndex].images.length - 1 : currentIndex - 1;
                 return { ...prev, [projectIndex]: newIndex };
             });
-            setTimeout(() => {
-                setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
-            }, 50);
+            setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
         }, 200);
     };
 
@@ -151,9 +149,7 @@ export default function Projects({ visible }) {
                 const newIndex = currentIndex === projects[projectIndex].images.length - 1 ? 0 : currentIndex + 1;
                 return { ...prev, [projectIndex]: newIndex };
             });
-            setTimeout(() => {
-                setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
-            }, 50);
+            setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
         }, 200);
     };
 
@@ -232,7 +228,12 @@ export default function Projects({ visible }) {
                                                 <Indicator 
                                                     key={imgIndex} 
                                                     active={imgIndex === (activeImageIndex[index] || 0)}
-                                                    onClick={() => setActiveImageIndex(prev => ({ ...prev, [index]: imgIndex }))}
+                                                    onClick={() => {
+                                                        setIsTransitioning(prev => ({ ...prev, [index]: true }));
+                                                        setTimeout(() => {
+                                                            setIsTransitioning(prev => ({ ...prev, [index]: false }));
+                                                        }, 200);
+                                                    }}
                                                 />
                                             ))}
                                         </ImageIndicators>
