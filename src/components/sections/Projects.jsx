@@ -55,8 +55,18 @@ export default function Projects({ visible }) {
     const { t } = useTranslation();
     const [activeImageIndex, setActiveImageIndex] = useState({});
     const [isTransitioning, setIsTransitioning] = useState({});
+    const [imageLoaded, setImageLoaded] = useState({});
     const [touchStart, setTouchStart] = useState({});
     const [touchEnd, setTouchEnd] = useState({});
+
+    const preloadImage = (src) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(src);
+            img.onerror = reject;
+            img.src = src;
+        });
+    };
 
     const projects = [
         {
@@ -130,27 +140,41 @@ export default function Projects({ visible }) {
     ];
 
     const handlePrevImage = (projectIndex) => {
+        const currentIndex = activeImageIndex[projectIndex] || 0;
+        const newIndex = currentIndex === 0 ? projects[projectIndex].images.length - 1 : currentIndex - 1;
+        const nextImageSrc = projects[projectIndex].images[newIndex];
+
         setIsTransitioning(prev => ({ ...prev, [projectIndex]: true }));
-        setTimeout(() => {
-            setActiveImageIndex(prev => {
-                const currentIndex = prev[projectIndex] || 0;
-                const newIndex = currentIndex === 0 ? projects[projectIndex].images.length - 1 : currentIndex - 1;
-                return { ...prev, [projectIndex]: newIndex };
-            });
-            setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
-        }, 200);
+        setImageLoaded(prev => ({ ...prev, [projectIndex]: false }));
+        
+        preloadImage(nextImageSrc).then(() => {
+            setTimeout(() => {
+                setActiveImageIndex(prev => ({ ...prev, [projectIndex]: newIndex }));
+                setImageLoaded(prev => ({ ...prev, [projectIndex]: true }));
+                setTimeout(() => {
+                    setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
+                }, 50);
+            }, 200);
+        });
     };
 
     const handleNextImage = (projectIndex) => {
+        const currentIndex = activeImageIndex[projectIndex] || 0;
+        const newIndex = currentIndex === projects[projectIndex].images.length - 1 ? 0 : currentIndex + 1;
+        const nextImageSrc = projects[projectIndex].images[newIndex];
+
         setIsTransitioning(prev => ({ ...prev, [projectIndex]: true }));
-        setTimeout(() => {
-            setActiveImageIndex(prev => {
-                const currentIndex = prev[projectIndex] || 0;
-                const newIndex = currentIndex === projects[projectIndex].images.length - 1 ? 0 : currentIndex + 1;
-                return { ...prev, [projectIndex]: newIndex };
-            });
-            setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
-        }, 200);
+        setImageLoaded(prev => ({ ...prev, [projectIndex]: false }));
+        
+        preloadImage(nextImageSrc).then(() => {
+            setTimeout(() => {
+                setActiveImageIndex(prev => ({ ...prev, [projectIndex]: newIndex }));
+                setImageLoaded(prev => ({ ...prev, [projectIndex]: true }));
+                setTimeout(() => {
+                    setIsTransitioning(prev => ({ ...prev, [projectIndex]: false }));
+                }, 50);
+            }, 200);
+        });
     };
 
     const handleTouchStart = (e, projectIndex) => {
@@ -210,6 +234,7 @@ export default function Projects({ visible }) {
                                             src={project.images[activeImageIndex[index] || 0]} 
                                             alt={`${project.name} screenshot`}
                                             transitioning={isTransitioning[index]}
+                                            loaded={imageLoaded[index] !== false}
                                         />
                                         {project.images.length > 1 && (
                                             <>
@@ -229,11 +254,21 @@ export default function Projects({ visible }) {
                                                     key={imgIndex} 
                                                     active={imgIndex === (activeImageIndex[index] || 0)}
                                                     onClick={() => {
+                                                        if (imgIndex === (activeImageIndex[index] || 0)) return;
+                                                        
+                                                        const nextImageSrc = project.images[imgIndex];
                                                         setIsTransitioning(prev => ({ ...prev, [index]: true }));
-                                                        setTimeout(() => {
-                                                            setActiveImageIndex(prev => ({ ...prev, [index]: imgIndex }));
-                                                            setIsTransitioning(prev => ({ ...prev, [index]: false }));
-                                                        }, 200);
+                                                        setImageLoaded(prev => ({ ...prev, [index]: false }));
+                                                        
+                                                        preloadImage(nextImageSrc).then(() => {
+                                                            setTimeout(() => {
+                                                                setActiveImageIndex(prev => ({ ...prev, [index]: imgIndex }));
+                                                                setImageLoaded(prev => ({ ...prev, [index]: true }));
+                                                                setTimeout(() => {
+                                                                    setIsTransitioning(prev => ({ ...prev, [index]: false }));
+                                                                }, 50);
+                                                            }, 200);
+                                                        });
                                                     }}
                                                 />
                                             ))}
@@ -402,7 +437,7 @@ const ProjectImage = styled.img`
     height: 100%;
     object-fit: cover;
     display: block;
-    opacity: ${props => props.transitioning ? 0 : 1};
+    opacity: ${props => props.transitioning || !props.loaded ? 0 : 1};
     transition: opacity 0.2s ease-in-out;
 `;
 
