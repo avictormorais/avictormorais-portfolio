@@ -101,6 +101,12 @@ function App() {
   }, [selectedMenuItem])
 
   useEffect(() => {
+    if (selectedMenuItem && lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: false })
+    }
+  }, [selectedMenuItem])
+
+  useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth <= 1024)
     }
