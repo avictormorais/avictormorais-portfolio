@@ -1,0 +1,3 @@
+User-agent: *
+# Os rastreadores precisam acessar as URLs para receberem o X-Robots-Tag: noindex.
+Allow: /
